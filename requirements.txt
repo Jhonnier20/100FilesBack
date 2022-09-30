@@ -2,4 +2,7 @@ Flask==2.2.2
 pymongo==4.2.0
 python-dotenv==0.20.0
 waitress==2.1.2
+<<<<<<< HEAD
 azure-storage-blob==12.13.1
+=======
+>>>>>>> d0b53d862e527ee52e5d5f0add2b6b427cb90d6c
