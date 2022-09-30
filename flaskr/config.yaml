@@ -1,0 +1,4 @@
+---
+azure_storage_connectionstring: "connectionstring"
+files_container_name: "files"
+source_folder: "/home/jhonnier/distribuidos2022/Flask"
