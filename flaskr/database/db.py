@@ -7,7 +7,7 @@ load_dotenv()
 try:
     client = MongoClient(os.getenv('MONGOURI'))                   
     db = client['core']
-    collection = db['pokes']
+    collection = db['Files']
     print ('***********  Mongo intance  ***********')
 except errors.ServerSelectionTimeoutError as err:
     # do whatever you need

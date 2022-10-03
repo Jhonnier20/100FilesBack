@@ -1,5 +1,0 @@
----
-azure_storage_connectionstring: "DefaultEndpointsProtocol=https;AccountName=bucketexam1;AccountKey=iBiaMhaajizMGIqjMV0HCUCG8eqxI7uWzH9C3eFDxQa4jkeWcPpsiUSIbZG2rpGHhRn3eue7+79E+AStdjPfHQ==;EndpointSuffix=core.windows.net"
-media_container_name: "media"
-documents_container_name: "documents"
-source_folder: "/home/jhonnier/distribuidos2022/Flask"

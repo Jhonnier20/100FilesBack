@@ -3,12 +3,15 @@ import os
 from waitress import serve
 from flask import abort
 from flask import request
+from flask import jsonify
 from werkzeug.exceptions import HTTPException
-from flaskr.functions import upload_file, get_files
+from flask_cors import CORS
+from flaskr.services.functions import upload_file_service, get_files
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
 
     try:
         os.makedirs(app.instance_path)
@@ -44,11 +47,15 @@ def create_app(test_config=None):
     ALLOWED_EXTENSIONS = set(
         ["png", "jpg", "jpeg", "gif", "pdf", "mp3", "mp4"])
 
-    @app.post("/upload-file")
-    def upload_file_api():
+    @app.route('/upload-file', methods=['POST'])
+    def upload_file():
+        # f = request.form
+        # f = f.iterlists()
+        # print(len(f))
         request_data = request.get_json()
-
-        return upload_file(request_data)
+        upload_file_service(request_data)
+        response = {'message': 'success'}
+        return jsonify(response)
 
     @app.get("/get-files")
     def get_files_api():
