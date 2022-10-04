@@ -1,12 +1,13 @@
 from flask import Flask
 import os
+import socket
 from waitress import serve
 from flask import abort
 from flask import request
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
 from flask_cors import CORS
-from flaskr.services.functions import upload_file_service, get_files
+from flaskr.services.functions import upload_file_service, get_files_service
 
 
 def create_app(test_config=None):
@@ -44,21 +45,15 @@ def create_app(test_config=None):
 
     # Hacemos los api para cargar, y leer los datos de los archivos que hay en la BD
 
-    ALLOWED_EXTENSIONS = set(
-        ["png", "jpg", "jpeg", "gif", "pdf", "mp3", "mp4"])
-
     @app.route('/upload-file', methods=['POST'])
     def upload_file():
-        # f = request.form
-        # f = f.iterlists()
-        # print(len(f))
         request_data = request.get_json()
         upload_file_service(request_data)
-        response = {'message': 'success'}
+        response = {'message': socket.gethostname()}
         return jsonify(response)
 
     @app.get("/get-files")
-    def get_files_api():
-        return get_files
+    def get_files():
+        return get_files_service
 
     return app
