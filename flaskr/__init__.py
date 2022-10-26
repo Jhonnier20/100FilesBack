@@ -7,7 +7,9 @@ from flask import request
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
 from flask_cors import CORS
-from flaskr.services.functions import upload_file_service, get_files_service
+from flaskr.services.functions import upload_file_service, get_files_service, get_storage_service, get_host_service
+
+# Correr Flask: flask --app flaskr --debug run
 
 
 def create_app(test_config=None):
@@ -54,6 +56,14 @@ def create_app(test_config=None):
 
     @app.get("/get-files")
     def get_files():
-        return get_files_service
+        return get_files_service()
+
+    @app.get("/get-storage")
+    def get_storage():
+        return get_storage_service()
+
+    @app.get("/get-host")
+    def get_host():
+        return get_host_service()
 
     return app

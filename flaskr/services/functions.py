@@ -2,9 +2,10 @@ from flaskr.database.db import get_db
 import json
 import base64
 from flaskr.model.file import File
-from flaskr.blob_azure.use_blob_auth import uploadConnection
+from flaskr.blob_azure.use_blob_auth import uploadConnection, storage
 from werkzeug.utils import secure_filename
 import os
+import socket
 
 #
 # This function calls the database and returns the list with the values of the properties all users in the application.
@@ -42,8 +43,7 @@ def save_bucket(data, fullname, type):
     with open(fullname, "wb") as f:
         file = f.write(data_decode)
 
-    uploadConnection(fullname, type)
-    return ""
+    return uploadConnection(fullname, type)
 
 
 # Metodo que recibe el json data con dos atributos.
@@ -51,27 +51,38 @@ def save_bucket(data, fullname, type):
 # 'data' data en base 64 del archivo
 # Aqui evaluamos si es media o document y luego guardamos la informacion del file en la bd
 def upload_file_service(data):
-    file_name = data['name']
-    ext = file_name.split(".")
+    try:
+        file_name = data['name']
+        ext = file_name.split(".")
+        path = ""
 
-    if ext[1] in MEDIA_EXTENSIONS:
-        file_data = data['data']
-        path = save_bucket(file_data, file_name, 1)
+        if ext[1] in MEDIA_EXTENSIONS:
+            file_data = data['data']
+            path = save_bucket(file_data, file_name, 1)
+            path = path + "media/" + file_name
 
-    elif ext[1] in DOCUMENT_EXTENSIONS:
-        file_data = data['data']
-        path = save_bucket(file_data, file_name, 2)
+        elif ext[1] in DOCUMENT_EXTENSIONS:
+            file_data = data['data']
+            path = save_bucket(file_data, file_name, 2)
+            path = path + "documents/" + file_name
 
-    else:
-        return False
+        else:
+            return False
 
-    db = get_db()
-    file = File(name=file_name, path=path, ext=ext[1])
-    print(file)
-    collection = db['Files']
-    collection.insert_one(file.getFile())
+        if path != "":
+            db = get_db()
+            file = File(id="", name=ext[0], path=path, ext=ext[1])
+            print(file)
+            collection = db['Files']
+            collection.insert_one(file.getFile())
 
-    return True
+            return True
+
+        else:
+            return False
+
+    except Exception as e:
+        print(e)
 
 
 # Metodo para retornar la lista de Files que hay en la BD
@@ -80,9 +91,22 @@ def get_files_service():
     db = get_db()
     files_collection = db['Files']
     all_files = files_collection.find()
+
     list_files = list(all_files)
 
     for file in list_files:
         file["_id"] = str(file["_id"])
 
     return (json.dumps(list_files))
+
+
+def get_storage_service():
+    return storage()
+
+
+def get_host_service():
+    host = {
+        'name': socket.gethostname(),
+        'ip': socket.gethostbyname(socket.gethostname())
+    }
+    return host

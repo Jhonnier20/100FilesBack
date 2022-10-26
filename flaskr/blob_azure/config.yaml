@@ -1,5 +1,5 @@
 ---
-azure_storage_connectionstring: "DefaultEndpointsProtocol=https;AccountName=bucketexam1;AccountKey=kx0M4IuS0RnBPecnBzX+ftlDvQIVEd1mdLyLhqYcQ0WyvtXjnXntL7v2EtAg/FrtS/chI0YObecG+ASt+UO6yQ==;EndpointSuffix=core.windows.net"
+azure_storage_connectionstring: "DefaultEndpointsProtocol=https;AccountName=bucketexam1;AccountKey=Otk5GQzadsUnHFGfHhcAEJsOlwMqbvYD2nqAsww1Xy7gdLPgYZdZkqiNRom8Q15b7Tnx7CpX7k8s+AStu65TWA==;EndpointSuffix=core.windows.net"
 media_container_name: "media"
 documents_container_name: "documents"
-source_folder: "/home/jhonnier/distribuidos2022/Flask"
+source_folder: "/home/jhonnier/distribuidos2022/Flask/back"

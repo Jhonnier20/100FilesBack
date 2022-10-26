@@ -5,12 +5,11 @@ from unicodedata import name
 
 class File:
 
-    def __init__(self, id, name, path, ext, host):
+    def __init__(self, id, name, path, ext):
         self.id = id
         self.name = name
         self.path = path
         self.ext = ext
-        self.host = host
 
     def addFile(self):
         return {
@@ -21,8 +20,8 @@ class File:
 
     def getFile(self):
         return {
+            'host': self.id,
             'name': self.name,
             'path': self.path,
             'ext': self.ext,
-            'host': self.host
         }
