@@ -15,6 +15,7 @@ from flaskr.services.functions import upload_file_service, get_files_service, ge
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
 
     try:
         os.makedirs(app.instance_path)
