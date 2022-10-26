@@ -1,8 +1,8 @@
-from flaskr.database.db import get_db
+from database.db import get_db
 import json
 import base64
-from flaskr.model.file import File
-from flaskr.blob_azure.use_blob_auth import uploadConnection, storage
+from model.file import File
+from blob_azure.use_blob_auth import uploadConnection, storage
 from werkzeug.utils import secure_filename
 import os
 import socket
